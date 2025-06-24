@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Axis Care</title>
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1"
+    />
+    <!-- Bootstrap CSS -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <style>
+      body {
+        min-height: 100vh;
+      }
+      .sidebar {
+        min-height: 100vh;
+        background-color: #343a40;
+        color: white;
+        position: fixed;
+            height: 100vh;
+            overflow-y: scroll
+      }
+      .sidebar a {
+        color: white;
+        text-decoration: none;
+        display: block;
+        padding: 10px 20px;
+      }
+      .sidebar a:hover,
+      .sidebar .active {
+        background-color: #495057;
+      }
+    </style>
+  </head>
+  <body class="bg-light">
+    <div class="container-fluid">
+      <div class="row">
+        <!-- Sidebar -->
+        <nav class="col-md-3 col-lg-2 sidebar py-4">
+          <h4 class="text-center mb-4">Axis Care</h4>
+          <a href="AdminLogin.html">Admin Login</a>
+          <a href="Register.html"> Admin Register</a>
+          <a href="DailyCallLog.html"> Daily Call log</a>
+          <a href="ClientListData.html"> Client list Data</a>
+          <a href="Calendar.html"> Calendar</a>
+          <a href="Client_Task_Checklis.html"> Client task checklist</a>
+          <a href="ClientList.html" class="active"> Client list</a>
+          <a href="TherapistContactList.html"> Therapy contact list</a>
+          <a href="FTPOManagementSystem.html"> FTPO Management System</a>
+          <a href="setup.html"> Setup</a>
+          <a href="CallLogs.html"> Call Logs</a>
+          <a href="EmailLogs.html"> Email logs</a>
+          <a href="ProjectList.html">Project List</a>
+          <a href="TaskList.html">Task List</a>
+          <a href="MeetingList.html">Meeting List</a>
+          <a href="InvoiceLog.html">Invoice Log</a>
+        </nav>
+
+        <!-- Main Content -->
+        <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+          <div class="py-4">
+            <h2 class="mb-4">Clients List</h2>
+
+            <!-- Tabs Navigation -->
+            <ul class="nav nav-tabs" id="clientTabs" role="tablist">
+              <li class="nav-item" role="presentation">
+                <button class="nav-link active" id="active-tab" data-bs-toggle="tab" data-bs-target="#active" type="button" role="tab">
+                  Active Clients
+                </button>
+              </li>
+              <li class="nav-item" role="presentation">
+                <button class="nav-link" id="pending-tab" data-bs-toggle="tab" data-bs-target="#pending" type="button" role="tab">
+                  Pending Clients
+                </button>
+              </li>
+              <li class="nav-item" role="presentation">
+                <button class="nav-link" id="discharged-tab" data-bs-toggle="tab" data-bs-target="#discharged" type="button" role="tab">
+                  Discharged Clients
+                </button>
+              </li>
+            </ul>
+
+            <!-- Tabs Content -->
+            <div class="tab-content mt-3" id="clientTabsContent">
+              <!-- Active Clients Table -->
+              <div class="tab-pane fade show active" id="active" role="tabpanel">
+                <table class="table table-bordered table-striped">
+                  <thead>
+                    <tr>
+                      <th>Client Name</th>
+                      <th>Policy Number</th>
+                      <th>Date of Birth</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>John Smith</td>
+                      <td>AX12345</td>
+                      <td>1990-01-15</td>
+                    </tr>
+                    <tr>
+                      <td>Alice Brown</td>
+                      <td>AX67890</td>
+                      <td>1985-08-22</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+
+              <!-- Pending Clients Table -->
+              <div class="tab-pane fade" id="pending" role="tabpanel">
+                <table class="table table-bordered table-striped">
+                  <thead>
+                    <tr>
+                      <th>Client Name</th>
+                      <th>Policy Number</th>
+                      <th>Date of Birth</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>Michael Lee</td>
+                      <td>AX24680</td>
+                      <td>1992-04-10</td>
+                    </tr>
+                    <tr>
+                      <td>Sara Khan</td>
+                      <td>AX13579</td>
+                      <td>1988-12-05</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+
+              <!-- Discharged Clients Table -->
+              <div class="tab-pane fade" id="discharged" role="tabpanel">
+                <table class="table table-bordered table-striped">
+                  <thead>
+                    <tr>
+                      <th>Client Name</th>
+                      <th>Policy Number</th>
+                      <th>Date of Birth</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>Raj Mehta</td>
+                      <td>AX54321</td>
+                      <td>1975-03-27</td>
+                    </tr>
+                    <tr>
+                      <td>Nina Roy</td>
+                      <td>AX98765</td>
+                      <td>1980-09-12</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </main>
+      </div>
+    </div>
+
+    <!-- Bootstrap JS Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  </body>
+</html>

@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Axis Care</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body {
+            min-height: 100vh;
+        }
+
+        .sidebar {
+            min-height: 100vh;
+            background-color: #343a40;
+            color: white;
+            position: fixed;
+            height: 100vh;
+            overflow-y: scroll
+        }
+
+        .sidebar a {
+            color: white;
+            text-decoration: none;
+            display: block;
+            padding: 10px 20px;
+        }
+
+        .sidebar a:hover,
+        .sidebar .active {
+            background-color: #495057;
+        }
+
+        .calendar-controls .form-select,
+        .calendar-controls .btn-group .btn {
+            margin-bottom: 0.5rem;
+        }
+
+        @media (min-width: 768px) {
+
+            .calendar-controls .form-select,
+            .calendar-controls .btn-group .btn {
+                margin-bottom: 0;
+                margin-right: 0.5rem;
+            }
+
+            .calendar-controls .btn-group {
+                margin-right: 0.5rem;
+            }
+        }
+
+        .calendar-container {
+            background-color: #fff;
+            border-radius: 0.375rem;
+            padding: 1rem;
+            box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+        }
+
+        .calendar-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .calendar-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 1px;
+            background-color: #dee2e6;
+            /* Light border color */
+            border: 1px solid #dee2e6;
+        }
+
+        .calendar-grid .day-header,
+        .calendar-grid .day-cell {
+            background-color: #fff;
+            padding: 0.5rem;
+            text-align: center;
+            min-height: 80px;
+            /* Adjust as needed */
+        }
+
+        .calendar-grid .day-header {
+            font-weight: bold;
+            background-color: #f8f9fa;
+            /* Lighter header background */
+            padding: 0.75rem 0.5rem;
+        }
+
+        .calendar-grid .day-cell .day-number {
+            font-size: 0.85rem;
+            font-weight: bold;
+            display: block;
+            margin-bottom: 0.25rem;
+        }
+
+        .calendar-grid .day-cell.other-month .day-number {
+            color: #adb5bd;
+            /* Muted color for days not in current month */
+        }
+
+        .event {
+            font-size: 0.75rem;
+            padding: 0.2rem 0.4rem;
+            margin-bottom: 0.2rem;
+            border-radius: 0.2rem;
+            color: white;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .event-meeting {
+            background-color: #0d6efd;
+        }
+
+        /* Blue for meetings */
+        .event-task {
+            background-color: #198754;
+        }
+
+        /* Green for tasks */
+    </style>
+</head>
+
+<body class="bg-light">
+    <div class="container-fluid">
+        <div class="row">
+            <!-- Sidebar -->
+            <nav class="col-md-3 col-lg-2 sidebar py-4">
+                <h4 class="text-center mb-4">Axis Care </h4>
+                <a href="AdminLogin.html">Admin Login</a>
+                <a href="Register.html"> Admin Register</a>
+                <a href="DailyCallLog.html"> Daily Call log</a>
+                <a href="ClientListData.html"> Client list Data</a>
+                <a href="Calendar.html" class="active"> Calendar</a>
+                <a href="Client_Task_Checklis.html"> Client task checklist</a>
+                <a href="ClientList.html"> Client list</a>
+                <a href="TherapistContactList.html"> Therapy contact list</a>
+                <a href="FTPOManagementSystem.html"> FTPO Management System</a>
+                <a href="setup.html"> Setup</a>
+                <a href="CallLogs.html"> Call Logs</a>
+                <a href="EmailLogs.html"> Email logs</a>
+                <a href="ProjectList.html"> Project List</a>
+                <a href="TaskList.html"> Task List</a>
+                <a href="MeetingList.html"> Meeting List</a>
+                <a href="InvoiceLog.html"> Invoice Log</a>
+            </nav>
+
+            <!-- Main Content -->
+            <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+                <div class="py-4">
+                    <h2 class="text-center text-primary mb-4">📅 My Calendar</h2>
+
+                    <!-- Controls: Toggle and Filters -->
+                    <div class="card shadow-sm mb-4">
+                        <div
+                            class="card-body d-flex flex-wrap justify-content-start align-items-center calendar-controls">
+                            <div class="btn-group me-md-3 mb-2 mb-md-0" role="group" aria-label="Toggle View">
+                                <button type="button" class="btn btn-outline-primary active" id="showMeetingsBtn"><i
+                                        class="fas fa-calendar-alt me-1"></i> Meetings</button>
+                                <button type="button" class="btn btn-outline-success" id="showTasksBtn"><i
+                                        class="fas fa-tasks me-1"></i> Tasks</button>
+                            </div>
+
+                            <select class="form-select form-select-sm me-md-2 mb-2 mb-md-0" style="max-width: 180px;"
+                                aria-label="Filter by Priority">
+                                <option selected>All Priorities</option>
+                                <option value="high">High Priority</option>
+                                <option value="medium">Medium Priority</option>
+                                <option value="low">Low Priority</option>
+                            </select>
+
+                            <select class="form-select form-select-sm mb-2 mb-md-0" style="max-width: 220px;"
+                                aria-label="Filter by Client">
+                                <option selected>All Clients</option>
+                                <option value="client1">Client Alpha (John D.)</option>
+                                <option value="client2">Client Beta (Jane S.)</option>
+                                <option value="client3">Client Gamma (Mike R.)</option>
+                                <!-- Add more clients dynamically here -->
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Calendar Display Area -->
+                    <div class="calendar-container">
+                        <div class="calendar-header">
+                            <button class="btn btn-outline-secondary btn-sm"><i
+                                    class="fas fa-chevron-left"></i></button>
+                            <h4 class="mb-0">July 2024</h4>
+                            <button class="btn btn-outline-secondary btn-sm"><i
+                                    class="fas fa-chevron-right"></i></button>
+                        </div>
+                        <div class="calendar-grid">
+                            <!-- Day Headers -->
+                            <div class="day-header">Sun</div>
+                            <div class="day-header">Mon</div>
+                            <div class="day-header">Tue</div>
+                            <div class="day-header">Wed</div>
+                            <div class="day-header">Thu</div>
+                            <div class="day-header">Fri</div>
+                            <div class="day-header">Sat</div>
+
+                            <!-- Example Day Cells (This would be generated dynamically) -->
+                            <div class="day-cell other-month"><span class="day-number">30</span></div>
+                            <div class="day-cell"><span class="day-number">1</span></div>
+                            <div class="day-cell"><span class="day-number">2</span>
+                                <div class="event event-meeting">Team Sync</div>
+                            </div>
+                            <div class="day-cell"><span class="day-number">3</span></div>
+                            <div class="day-cell"><span class="day-number">4</span>
+                                <div class="event event-task">Review Docs</div>
+                                <div class="event event-meeting">Client Call</div>
+                            </div>
+                            <div class="day-cell"><span class="day-number">5</span></div>
+                            <div class="day-cell"><span class="day-number">6</span></div>
+                            <!-- ... Add more day cells for the month ... -->
+                            <!-- Statically add more rows if needed, e.g. -->
+                            <div class="day-cell"><span class="day-number">7</span></div>
+                            <div class="day-cell"><span class="day-number">8</span></div>
+                            <div class="day-cell"><span class="day-number">9</span></div>
+                            <div class="day-cell"><span class="day-number">10</span>
+                                <div class="event event-task">Project Deadline</div>
+                            </div>
+                            <div class="day-cell"><span class="day-number">11</span></div>
+                            <div class="day-cell"><span class="day-number">12</span></div>
+                            <div class="day-cell"><span class="day-number">14</span></div>
+                            <div class="day-cell"><span class="day-number">15</span></div>
+                            <div class="day-cell"><span class="day-number">16</span></div>
+                            <div class="day-cell"><span class="day-number">17</span></div>
+                            <div class="day-cell"><span class="day-number">18</span></div>
+                            <div class="day-cell"><span class="day-number">19</span></div>
+                            <div class="day-cell"><span class="day-number">20</span></div>
+                            <div class="day-cell"><span class="day-number">21</span></div>
+                            <div class="day-cell"><span class="day-number">22</span></div>
+                            <div class="day-cell"><span class="day-number">23</span></div>
+                            <div class="day-cell"><span class="day-number">24</span></div>
+                            <div class="day-cell"><span class="day-number">25</span></div>
+                            <div class="day-cell"><span class="day-number">26</span></div>
+                            <div class="day-cell"><span class="day-number">27</span></div>
+                            <div class="day-cell"><span class="day-number">28</span></div>
+                            <div class="day-cell"><span class="day-number">29</span></div>
+                            <div class="day-cell"><span class="day-number">30</span></div>
+
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>

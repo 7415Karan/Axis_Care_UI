@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Axis Care</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body {
+            min-height: 100vh;
+        }
+
+        .sidebar {
+            min-height: 100vh;
+            background-color: #343a40;
+            color: white;
+            position: fixed;
+            height: 100vh;
+            overflow-y: scroll
+        }
+
+        .sidebar a {
+            color: white;
+            text-decoration: none;
+            display: block;
+            padding: 10px 20px;
+        }
+
+        .sidebar a:hover,
+        .sidebar .active {
+            background-color: #495057;
+        }
+    </style>
+</head>
+
+<body class="bg-light">
+    <div class="container-fluid">
+        <div class="row">
+            <!-- Sidebar -->
+            <nav class="col-md-3 col-lg-2 sidebar py-4">
+                <h4 class="text-center mb-4">Axis Care</h4>
+                <a href="AdminLogin.html">Admin Login</a>
+                <a href="Register.html"> Admin Register</a>
+                <a href="DailyCallLog.html"> Daily Call log</a>
+                <a href="ClientListData.html"> Client list Data</a>
+                <a href="Calendar.html"> Calendar</a>
+                <a href="Client_Task_Checklis.html"> Client task checklist</a>
+                <a href="ClientList.html"> Client list</a>
+                <a href="TherapistContactList.html"> Therapy contact list</a>
+                <a href="FTPOManagementSystem.html"> FTPO Management System</a>
+                <a href="setup.html"> Setup</a>
+                <a href="CallLogs.html"> Call Logs</a>
+                <a href="EmailLogs.html"> Email logs</a>
+                <a href="ProjectList.html">Project List</a>
+                <a href="TaskList.html">Task List</a>
+                <a href="MeetingList.html" class="active">Meeting List</a>
+                <a href="InvoiceLog.html">Invoice Log</a>
+            </nav>
+
+            <!-- Main Content -->
+            <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+                <div class="py-4">
+                    <!-- Top Section: 2 Cards and 2 Charts -->
+                    <div class="row g-2 mb-4">
+                        <!-- left graph panel -->
+                        <div class="col-lg-4 d-flex flex-column">
+                            <div class="card shadow-sm border-0 h-100">
+                                <div class="card-body bg-light p-4 rounded d-flex flex-column justify-content-start">
+                                    <div class="d-flex justify-content-between align-items-center mb-3 ">
+                                        <h5 class="card-title mb-0">Scheduled Meetings Today</h5>
+                                        <h3 class="text-primary mb-0">3</h3>
+                                    </div>
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <h5 class="card-title mb-0">Upcoming Meetings (7 Days)</h5>
+                                        <h3 class="text-info mb-0">5</h3>
+                                    </div>
+                                    <hr class="my-3">
+                                    <h6 class="text-muted mt-4 mb-3">📅 Meetings Alert</h6>
+                                    <ul class="list-group list-group-flush small">
+                                        <li class="list-group-item px-0 py-1">
+                                            <strong>10:00 AM:</strong> Cloud Migration Planning
+                                            <span class="badge bg-warning text-dark float-end">Today</span>
+                                        </li>
+                                        <li class="list-group-item px-0 py-1 mt-1">
+                                            <strong>02:00 PM:</strong> Chatbot Demo
+                                             <span class="badge bg-warning text-dark float-end">Today</span>
+                                        </li>
+                                        <!-- Add more alerts dynamically here -->
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- right graph panel -->
+                        <div class="col-lg-8 d-flex flex-column">
+                            <div class="card shadow-sm border-0 h-100">
+                                <div class="card-body">
+                                    <h5>📅 Meetings Scheduled - Next 10 Days</h5>
+                                    <canvas id="meetingChart" style="max-height: 250px;"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Bottom section table  -->
+                    <div class="width-100">
+                        <div class="card shadow-sm border-0 h-100">
+                            <div class="card-body table-responsive ">
+                                <h5 class="card-title mb-3">Meeting Details💼</h5>
+                                <div class="mb-3">
+                                    <div class=" row g-2 align-items-center">
+                                        <div class="col-sm-4">
+                                            <input type="text" class="form-control form-control-sm" id="emailLogFilterName"
+                                                placeholder="Filter by Name...">
+                                        </div>
+                                        <div class="col-sm-5">
+                                            <input type="text" class="form-control form-control-sm" id="emailLogFilterContent"
+                                                placeholder="Search Content...">
+                                        </div>
+                                        <div class="col-sm-3">
+                                            <select class="form-select form-select-sm" id="emailLogSortDate">
+                                                <option selected disabled>Sort by Date</option>
+                                                <option value="asc">Ascending</option>
+                                                <option value="desc">Descending</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <table class="table table-hover align-middle">
+                                    <thead class="table-light">
+                                        <tr>
+                                            <th>Meeting</th>
+                                            <th>Time</th>
+                                            <th>Client</th>
+                                            <th>Venue</th>
+                                            <th>Meeting Time</th>
+                                            <th>Meeting Content</th>
+                                            <th>Priority</th>
+                                            <th>Attended</th>
+                                            <th>Notes</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>2025-06-20</td>
+                                            <td>10:00 AM</td>
+                                            <td>Satya Nadella</td>
+                                            <td>Microsoft HQ, Redmond</td>
+                                            <td>60 min</td>
+                                            <td>Cloud Migration Planning</td>
+                                            <td><span class="badge bg-danger">High</span></td>
+                                            <td>Yes</td>
+                                            <td>Follow-up scheduled</td>
+                                        </tr>
+                                        <tr>
+                                            <td>2025-06-21</td>
+                                            <td>02:00 PM</td>
+                                            <td>Mark Zuckerberg</td>
+                                            <td>Meta Campus, Menlo Park</td>
+                                            <td>45 min</td>
+                                            <td>Chatbot Integration Demo</td>
+                                            <td><span class="badge bg-warning text-dark">Medium</span></td>
+                                            <td>No</td>
+                                            <td>Client unavailable</td>
+                                        </tr>
+                                        <tr>
+                                            <td>2025-06-22</td>
+                                            <td>11:30 AM</td>
+                                            <td>Tim Cook</td>
+                                            <td>Apple Park, Cupertino</td>
+                                            <td>30 min</td>
+                                            <td>iOS App Testing Review</td>
+                                            <td><span class="badge bg-success">Low</span></td>
+                                            <td>Yes</td>
+                                            <td>QA issues resolved</td>
+                                        </tr>
+                                        <tr>
+                                            <td>2025-06-23</td>
+                                            <td>04:00 PM</td>
+                                            <td>Jeff Bezos</td>
+                                            <td>Amazon HQ, Seattle</td>
+                                            <td>50 min</td>
+                                            <td>Payment Gateway Setup</td>
+                                            <td><span class="badge bg-danger">High</span></td>
+                                            <td>Yes</td>
+                                            <td>Pending audit approval</td>
+                                        </tr>
+                                        <tr>
+                                            <td>2025-06-24</td>
+                                            <td>03:00 PM</td>
+                                            <td>Susan Wojcicki</td>
+                                            <td>Googleplex, Mountain View</td>
+                                            <td>40 min</td>
+                                            <td>Video Hosting Briefing</td>
+                                            <td><span class="badge bg-warning text-dark">Medium</span></td>
+                                            <td>No</td>
+                                            <td>Rescheduling requested</td>
+                                        </tr>
+                                        <tr>
+                                            <td>2025-06-25</td>
+                                            <td>09:00 AM</td>
+                                            <td>Bill Gates</td>
+                                            <td>Gates Foundation, Seattle</td>
+                                            <td>35 min</td>
+                                            <td>Dashboard Presentation</td>
+                                            <td><span class="badge bg-success">Low</span></td>
+                                            <td>Yes</td>
+                                            <td>Impressed with visuals</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <script>
+        const ctx = document.getElementById('meetingChart').getContext('2d');
+        new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: ['Jun 20', 'Jun 21', 'Jun 22', 'Jun 23', 'Jun 24', 'Jun 25', 'Jun 26', 'Jun 27', 'Jun 28', 'Jun 29'],
+                datasets: [{
+                    label: 'Meetings Scheduled',
+                    data: [1, 3, 2, 2, 1, 5, 3, 2, 0, 4],
+                    borderColor: '#007bff',
+                    backgroundColor: '#66afff',
+                    // fill: true,
+                    // tension: 0.3
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        display: true,
+                        position: 'top'
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        ticks: {
+                            stepSize: 1
+                        }
+                    }
+                }
+            }
+        });
+        
+    </script>
+</body>
+
+</html>
